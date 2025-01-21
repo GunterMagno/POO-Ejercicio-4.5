@@ -24,4 +24,5 @@ fun main(){
     val tiempo1 = try {
         Tiempo(hora1, minutos1, segundos1)
     }catch (e :IllegalArgumentException){e.message}
+
 }
