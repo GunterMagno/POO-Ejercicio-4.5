@@ -1,11 +1,20 @@
-import kotlin.math.min
-
 class Tiempo(
     var hora :Int,
     var minutos :Int,
     var segundos :Int)
 {
     init {
+        validar()
+        ajustar()
+        require(hora in 0..24){"La hora tiene que ser entre 0 y 24."}
+    }
+
+    private fun validar(){
+        require(minutos >= 0){"Los minutos deben ser igual o mayores que 0."}
+        require(segundos >= 0){"Los segundos deben ser igual o mayores que 0."}
+    }
+
+    private fun ajustar(){
         if(segundos > 59){
             while(segundos > 59){
                 segundos -= 60
@@ -17,8 +26,6 @@ class Tiempo(
                 minutos -= 60
             hora ++
         }
-
-        require(hora in 0..24){"La hora tiene que ser entre 0 y 24."}
     }
 
     constructor(hora :Int,minutos: Int): this(hora,minutos, 0)

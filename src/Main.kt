@@ -1,5 +1,5 @@
 
-fun pedirUsuario(msj :String, cosa :String) : Int {
+fun pedirUsuario(msj :String, cosa :String) : Int? {
     try {
         print(msj)
         var entrada = readln().trim().toIntOrNull()
@@ -22,7 +22,12 @@ fun main(){
     val segundos1 = pedirUsuario("Dime los segundos: ","Segundos")
 
     val tiempo1 = try {
-        Tiempo(hora1, minutos1, segundos1)
+        if (hora1 != null && minutos1 != null && segundos1 != null) {
+            Tiempo(hora1, minutos1, segundos1)
+        } else {"Patata"}
+
+
     }catch (e :IllegalArgumentException){e.message}
 
+    tiempo1.toString()
 }
