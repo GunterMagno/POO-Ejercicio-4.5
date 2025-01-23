@@ -6,10 +6,11 @@ class Tiempo(
     init {
         validar()
         ajustar()
-        require(hora in 0..24){"La hora tiene que ser entre 0 y 24."}
     }
 
     private fun validar(){
+        require(hora <= 23){"La hora tiene que ser menor que 24."}
+        require(hora >= 0){"La hora tiene que ser igual o mayor que 0."}
         require(minutos >= 0){"Los minutos deben ser igual o mayores que 0."}
         require(segundos >= 0){"Los segundos deben ser igual o mayores que 0."}
     }
@@ -21,10 +22,11 @@ class Tiempo(
                 minutos ++
             }
         }
-        if(minutos > 59){
-            while(minutos > 59)
+        if(minutos > 59) {
+            while (minutos > 59){
                 minutos -= 60
-            hora ++
+                hora++
+            }
         }
     }
 
@@ -32,26 +34,50 @@ class Tiempo(
 
     constructor(hora: Int): this(hora, 0, 0)
 
-
     fun incrementar(t :Tiempo) :Boolean{
+        val copiaTiempo = this.copiar()
         hora += t.hora
         minutos += t.minutos
         segundos += t.segundos
-        return (hora <= 23)
+        ajustar()
+
+        if(hora >= 24 || hora < 0){
+            println("La hora a pasado de los limites establecidos por lo que no es valida, deshaciendo operacion...")
+            hora = copiaTiempo.hora
+            minutos = copiaTiempo.minutos
+            segundos = copiaTiempo.segundos
+            return false
+        }
+
+        validar()
+        return true
     }
 
     fun decrementar(t :Tiempo) :Boolean{
+        val copiaTiempo = this.copiar()
         hora -= t.hora
         minutos -= t.minutos
         segundos -= t.segundos
-        return (hora >= 0)
+        ajustar()
+
+        if(hora >= 24 || hora < 0){
+            println("La hora a pasado de los limites establecidos por lo que no es valida, deshaciendo operacion...")
+            hora = copiaTiempo.hora
+            minutos = copiaTiempo.minutos
+            segundos = copiaTiempo.segundos
+            return false
+        }
+
+        validar()
+        return true
     }
 
+    fun copiar() :Tiempo{
+        return Tiempo(hora, minutos, segundos)
+    }
 
     override fun toString(): String {
         return ("El tiempo es: ${hora}h ${minutos}m ${segundos}s")
     }
-
-
 
 }
