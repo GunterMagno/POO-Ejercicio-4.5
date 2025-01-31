@@ -72,9 +72,47 @@ class Tiempo(
         return true
     }
 
-    fun copiar() :Tiempo{
-        return Tiempo(hora, minutos, segundos)
+        fun comparar(t: Tiempo): Int {
+        return when {
+            this.hora > t.hora || (this.hora == t.hora && this.minutos > t.minutos) ||
+            (this.hora == t.hora && this.minutos == t.minutos && this.segundos > t.segundos) -> 1
+            this.hora == t.hora && this.minutos == t.minutos && this.segundos == t.segundos -> 0
+            else -> -1
+        }
     }
+
+    fun copiar(t: Tiempo) {
+        this.hora = t.hora
+        this.minutos = t.minutos
+        this.segundos = t.segundos
+    }
+
+    fun sumar(t: Tiempo): Tiempo? {
+        val nuevaHora = this.hora + t.hora
+        val nuevoMinuto = this.minutos + t.minutos
+        val nuevoSegundo = this.segundos + t.segundos
+        val resultado = Tiempo(nuevaHora, nuevoMinuto, nuevoSegundo)
+        
+        return if (resultado.hora < 24) resultado else null
+    }
+
+    fun restar(t: Tiempo): Tiempo? {
+        val nuevaHora = this.hora - t.hora
+        val nuevoMinuto = this.minutos - t.minutos
+        val nuevoSegundo = this.segundos - t.segundos
+        val resultado = Tiempo(nuevaHora, nuevoMinuto, nuevoSegundo)
+
+        return if (resultado.hora >= 0) resultado else null
+    }
+
+    fun esMayorQue(t: Tiempo): Boolean {
+        return this.comparar(t) == 1
+    }
+
+    fun esMenorQue(t: Tiempo): Boolean {
+        return this.comparar(t) == -1
+    }
+
 
     override fun toString(): String {
         return ("El tiempo es: ${hora}h ${minutos}m ${segundos}s")
