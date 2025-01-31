@@ -117,5 +117,4 @@ class Tiempo(
     override fun toString(): String {
         return ("El tiempo es: ${hora}h ${minutos}m ${segundos}s")
     }
-
 }
